@@ -7,34 +7,70 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class ManagerServlet
- */
+//controls manager-header
 @WebServlet("/ManagerServlet")
 public class ManagerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ManagerServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		String theCommand = request.getParameter("command");
+		if(theCommand == null) {
+			theCommand = "LoadDashBoard";
+		}
+		
+		switch(theCommand) {
+			case "LoadHomePage":
+				loadHomePage(request,response);
+				break;
+			case "LoadDashBoard":
+				loadDashBoard(request,response);
+				break;
+			case "Profile":
+				loadProfile(request,response);
+				break;
+			case "Logout":
+				loadLogout(request,response);
+				break;
+			default:
+				loadHomePage(request,response);
+				break;
+				
+		}
 	}
+	
+	
+private void loadLogout(HttpServletRequest request, HttpServletResponse response) {
+		
+	}
+
+
+
+private void loadProfile(HttpServletRequest request, HttpServletResponse response) {
+
+		
+	}
+
+
+
+
+	private void loadHomePage(HttpServletRequest request, HttpServletResponse response) {
+		
+	}
+
+
+
+	private void loadDashBoard(HttpServletRequest request, HttpServletResponse response) {
+
+		
+	}
+
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
