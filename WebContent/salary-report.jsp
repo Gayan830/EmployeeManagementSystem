@@ -4,36 +4,77 @@
 <!doctype html>
 <html lang="en">
 <head>
-<!-- Required meta tags -->
+
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
+
+<!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
+	crossorigin="anonymous"> -->
+
 
 <title>Dashboard</title>
 </head>
 <body>
-	<h1>Hello, world!</h1>
+	<form class="form-inline" action="ListEmployees" method="post">
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<label class="input-group-text" for="inputGroupSelect01">Employee</label>
+			</div>
+			<select name="employee" class="custom-select">
+				<c:forEach items="${userList}" var="user">
+					<option value="${user.employeeId}">${user.firstName}
+						${user.lastName}</option>
+				</c:forEach>
+			</select>
 
-	<div class="input-group mb-3">
-		<div class="input-group-prepend">
-			<label class="input-group-text" for="inputGroupSelect01">Select Employee</label>
+
+			<div class="input-group-prepend">
+				<label class="input-group-text" for="inputGroupSelect01">Month</label>
+			</div>
+			<select name="month" class="custom-select">
+				<c:forEach items="${sessionScope.months}" var="month">
+					<option value="${month}">${month}</option>
+				</c:forEach>
+			</select>
+
+			<div class="input-group-prepend">
+				<label class="input-group-text" for="inputGroupSelect01">Year</label>
+			</div>
+			<select name="year" class="custom-select">
+				<c:forEach items="${sessionScope.years}" var="year">
+					<option value="${year}">${year}</option>
+				</c:forEach>
+			</select>
+			<button type="submit">Search</button>
+
 		</div>
-		<select class="custom-select" id="inputGroupSelect01">
-			<c:forEach var="employee" items="UserList">
-         		<item>${employee.getFirstName()} ${employee.getFirstName()}</item>
+	</form>
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Year</th>
+				<th scope="col">Month</th>
+				<th scope="col">Day</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="work" items="${sessionScope.works}">
+				<tr>
+					<td>${work.year}</td>
+					<td>${work.month}</td>
+					<td>${work.type}</td>
+				</tr>
 			</c:forEach>
-		</select>
-	</div>
 
+		</tbody>
+	</table>
 
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<button type="button" class="btn btn-primary">Calculate Salary</button>
+
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>

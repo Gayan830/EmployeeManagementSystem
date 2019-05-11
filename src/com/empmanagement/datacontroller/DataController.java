@@ -1,9 +1,6 @@
 package com.empmanagement.datacontroller;
 
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.empmanagement.dao.ApplicationDao;
 import com.empmanagement.entity.SalaryPayment;

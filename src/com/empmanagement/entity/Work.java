@@ -4,19 +4,20 @@ import java.time.LocalDate;
 
 public class Work {
 	
-	private LocalDate date;
+	
+	
+	
+	private String month;
+	private String year;
 	private String type;
 	
-	public Work(LocalDate date, String type) {
-		this.date = date;
+	public Work(String month, String year, String type) {
+		this.month = month;
+		this.year = year;
 		this.type = type;
 	}
-	public LocalDate getDate() {
-		return date;
-	}
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
+	
+	
 	public String getType() {
 		return type;
 	}
@@ -24,4 +25,22 @@ public class Work {
 		this.type = type;
 	}
 	
+	public String getMonth() {
+		return month;
+	}
+
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+
+	public String getYear() {
+		return year;
+	}
+
+
+	public void setYear(String year) {
+		this.year = year;
+	}
 }
