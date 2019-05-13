@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import com.empmanagement.entity.Promotion;
+import com.empmanagement.entity.SalaryPayment;
 import com.empmanagement.entity.User;
 import com.empmanagement.entity.Work;
 
@@ -59,6 +60,55 @@ public class ApplicationDao {
 		}
 	}
 
+	public boolean updateEmployeeDetails(User user) {
+		try {
+			conn = DBConnection.getConnectionToDatabase();
+			String sql = "update user set firstName = ?, lastName = ?, userName = ?, email = ?,"
+					+ "telephone = ?, address =?,  role = ?, position = ? , department = ?, password = ?"
+					+ " where employeeId = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getFirstName());
+			pstmt.setString(2, user.getLastName());
+			pstmt.setString(3, user.getUserName());
+			pstmt.setString(4, user.getEmail());
+
+			pstmt.setString(5, user.getTelephone());
+			pstmt.setString(6, user.getAddress());
+			pstmt.setString(7, user.getRole());
+			pstmt.setString(8, user.getPosition());
+			pstmt.setString(9, user.getDepartment());
+			pstmt.setString(10, user.getPassword());
+			pstmt.setString(11, user.getEmployeeId());
+			pstmt.execute();
+			return true;
+		} catch (Exception e) {
+
+			System.out.println("Can't update...");
+			return false;
+		} finally {
+			close();
+		}
+
+	}
+
+	public String getEmployeePosition(String id) {
+		String position = null;
+		try {
+			conn = DBConnection.getConnectionToDatabase();
+			pstmt = conn.prepareStatement("select position from user where employeeId = ?");
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				position = rs.getString("position");
+			}
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		} finally {
+			close();
+		}
+		return position;
+	}
+
 	public boolean register(User user) {
 		try {
 			conn = DBConnection.getConnectionToDatabase();
@@ -98,7 +148,7 @@ public class ApplicationDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, promotion.getYearsWorked());
 			pstmt.setString(2, promotion.getCurrentPosition());
-			pstmt.setString(3, promotion.getManagerApproval());
+			pstmt.setString(3, "no");
 			pstmt.setString(4, userId);
 			if (pstmt.executeUpdate() > -1) {
 				System.out.println("Successfully Inserted promotions");
@@ -158,22 +208,22 @@ public class ApplicationDao {
 		}
 	}
 
-	public List<Work> getWorkDetails(String year,String employeeId, String month) {
+	public List<Work> getWorkDetails(String year, String employeeId, String month) {
 
 		try {
 			List<Work> listWorks = new ArrayList<Work>();
 			conn = DBConnection.getConnectionToDatabase();
 			String sql = "select * from work where employeeId = ? and month = ? and year = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,employeeId);
-			pstmt.setString(2,month);
-			pstmt.setString(3,year);
+			pstmt.setString(1, employeeId);
+			pstmt.setString(2, month);
+			pstmt.setString(3, year);
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				
-				listWorks.add(new Work(rs.getString("month"), rs.getString("year"),rs.getString("type")));
-				
+
+			while (rs.next()) {
+
+				listWorks.add(new Work(rs.getString("month"), rs.getString("year"), rs.getString("type")));
+
 			}
 			return listWorks;
 		} catch (Exception e) {
@@ -191,13 +241,13 @@ public class ApplicationDao {
 			conn = DBConnection.getConnectionToDatabase();
 			String sql = "select * from work";
 			st = conn.createStatement();
-			
+
 			rs = st.executeQuery(sql);
-			
-			while(rs.next()) {
-				
-				listWorks.add(new Work(rs.getString("month"), rs.getString("year"),rs.getString("type")));
-				
+
+			while (rs.next()) {
+
+				listWorks.add(new Work(rs.getString("month"), rs.getString("year"), rs.getString("type")));
+
 			}
 			return listWorks;
 		} catch (Exception e) {
@@ -235,18 +285,36 @@ public class ApplicationDao {
 //			close();
 //		}
 //	}
+	
+	public List<String> getPositions() {
+		List<String> positions = new ArrayList<String>();
+		try {
+			conn = DBConnection.getConnectionToDatabase();
+			String sql = "select position from salaryscale";
+			st = conn.createStatement();
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				positions.add(rs.getString("position"));
+			}	
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			close();
+		}
+		return positions;
+	}
 
 	public Double[] getSalaryScale(String position) {
 		try {
 			Double[] arr = new Double[3];
 			conn = DBConnection.getConnectionToDatabase();
-			String sql = "select * from salaryScale where position = ? ";
+			String sql = "select * from salaryscale where position = ? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, position);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				arr[0] = rs.getDouble("salary");
-				arr[1] = rs.getDouble("overWorkDayPayRate");
+				arr[1] = rs.getDouble("overDayPayRate");
 				arr[2] = rs.getDouble("deductionRate");
 				return arr;
 			}
@@ -284,12 +352,17 @@ public class ApplicationDao {
 		try {
 			List<Promotion> promotion = new ArrayList<Promotion>();
 			conn = DBConnection.getConnectionToDatabase();
-			String sql = "select * from promotion";
+			String sql = "select * from promotions";
 			st = conn.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
-				promotion.add(new Promotion(rs.getInt("yearsWorked"), rs.getString("currentPosition"),
-						rs.getString("managerApproval"), rs.getString("employeeId")));
+				boolean managerApproval = false;
+				if (rs.getString("managerApproval").toLowerCase().equals("yes")) {
+					managerApproval = true;
+				}
+				promotion.add(new Promotion(rs.getInt("yearsWorked"), rs.getString("currentPosition"), managerApproval,
+						rs.getString("employeeId"), rs.getString("firstName"), rs.getString("lastName"),
+						rs.getString("department")));
 			}
 			return promotion;
 		} catch (Exception e) {
@@ -300,4 +373,76 @@ public class ApplicationDao {
 		}
 	}
 
+	public boolean submitPromotionRequest(Promotion promotion, String employeeId) {
+		try {
+			conn = DBConnection.getConnectionToDatabase();
+			String sql = "insert into promotion-request values(?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, promotion.getYearsWorked());
+			pstmt.setString(2, promotion.getCurrentPosition());
+			pstmt.setBoolean(3, promotion.getManagerApproval());
+			pstmt.setString(4, employeeId);
+
+			if (pstmt.executeUpdate() > -1) {
+				return true;
+			}
+			return false;
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
+		} finally {
+			close();
+		}
+
+	}
+
+	public void promote(String id, String selectedPromotion) {
+		try {
+			conn = DBConnection.getConnectionToDatabase();
+			pstmt = conn.prepareStatement("update user set position = ? where employeeId = ?");
+			pstmt.setString(1, id);
+			pstmt.setString(2, selectedPromotion);
+			if (pstmt.executeUpdate() > -1) {
+				System.out.println("Successfully Updated..");
+			}
+			pstmt = conn.prepareStatement("update promotions set currentPosition = ? , managerApproval = ? where employeeId = ?");
+			pstmt.setString(1, selectedPromotion);
+			pstmt.setString(2, "yes");
+			pstmt.setString(3, id);
+			
+			if (pstmt.executeUpdate() > -1) {
+				System.out.println("Successfully Updated Employee..");
+			}
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		} finally {
+			close();
+		}
+	}
+	
+	public boolean insertIntoPayments(SalaryPayment payment) {
+		try {
+			conn = DBConnection.getConnectionToDatabase();
+			pstmt = conn.prepareStatement("insert into payment values(?,?,?,?.?)");
+			pstmt.setDate(1, Date.valueOf(payment.getDate()));
+			pstmt.setDouble(2, payment.getSalary());
+			pstmt.setDouble(3, payment.getCompasanation());
+			pstmt.setDouble(4, payment.getDeduction());
+			pstmt.setDouble(5, payment.getPayment());
+			
+			if(pstmt.executeUpdate() >-1) {
+				System.out.println("Successfully Inserted.");
+				return true;
+			}
+			return false;
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		} finally {
+			close();
+		}
+		
+	}
+	
 }

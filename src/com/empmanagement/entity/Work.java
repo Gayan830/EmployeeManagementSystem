@@ -4,9 +4,6 @@ import java.time.LocalDate;
 
 public class Work {
 	
-	
-	
-	
 	private String month;
 	private String year;
 	private String type;

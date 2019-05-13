@@ -10,8 +10,9 @@ public class SalaryPayment {
 	private LocalDate Date;
 	private double salary;
 	private double payment;
-	
-	public SalaryPayment(int daysWorked, double compasanation, double deduction,  double salary,double payment) {
+
+
+	public SalaryPayment(int daysWorked, double compasanation, double deduction, double salary, double payment) {
 		this.daysWorked = daysWorked;
 		this.compasanation = compasanation;
 		this.deduction = deduction;
@@ -19,11 +20,11 @@ public class SalaryPayment {
 		this.salary = salary;
 		this.payment = payment;
 	}
-	
+
 	public int getDaysWorked() {
 		return daysWorked;
 	}
-	
+
 	public double getPayment() {
 		return payment;
 	}
@@ -43,25 +44,25 @@ public class SalaryPayment {
 	public double getCompasanation() {
 		return compasanation;
 	}
-	
+
 	public void setCompasanation(double compasanation) {
 		this.compasanation = compasanation;
 	}
-	
+
 	public double getDeduction() {
 		return deduction;
 	}
-	
+
 	public void setDeduction(double deduction) {
 		this.deduction = deduction;
 	}
-	
+
 	public double getSalary() {
 		return salary;
 	}
-	
+
 	public void setSalary(double salary) {
 		this.salary = salary;
 	}
-	
+
 }

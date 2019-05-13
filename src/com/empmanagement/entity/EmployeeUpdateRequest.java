@@ -10,7 +10,6 @@ public class EmployeeUpdateRequest {
 	private String Department;
 	
 	public EmployeeUpdateRequest(String userName, String passwords, String email, String department) {
-		super();
 		this.userName = userName;
 		this.passwords = passwords;
 		this.email = email;

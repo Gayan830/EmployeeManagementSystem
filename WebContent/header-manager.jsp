@@ -33,11 +33,11 @@
 					</li>
 					<li>&nbsp;&nbsp;&nbsp;</li>
 					<li class="nav-item"><a
-						class="btn btn-outline-success my-2 my-sm-0" href="">Profile</a>
+						class="btn btn-outline-success my-2 my-sm-0" href="profileServlet">Profile</a>
 					</li>
 					<li>&nbsp;&nbsp;&nbsp;</li>
 					<li class="nav-item"><a
-						class="btn btn-outline-success my-2 my-sm-0" href="">Logout</a>
+						class="btn btn-outline-success my-2 my-sm-0" href="LogoutServlet">Logout</a>
 					</li>
 					<li class="nav-item dropdown">
 						<div class="dropdown-menu"

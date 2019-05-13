@@ -35,7 +35,8 @@
 						</div>
 					
 					<div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-						
+							<h2 class="display-8" align="center">Request Promotion</h2>
+							<jsp:include page="promotion-request.jsp" />
 					</div>
 					<div class="tab-pane fade" id="v-pills-message" role="tabpanel" aria-labelledby="v-pills-message-tab">...Hakkkaka</div>
 				</div>
