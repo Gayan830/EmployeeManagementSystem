@@ -26,9 +26,17 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		User user = ApplicationDao.getInstance().isValidUser(email, password);
 		if (user != null) {
+
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
-			request.getRequestDispatcher("example.jsp").forward(request, response);;
+			if (user.getRegistered().toLowerCase().equals("yes")) {
+				request.getRequestDispatcher("example.jsp").forward(request, response);
+			} else {
+				String errorMessage = "You are registration request pending.";
+				request.setAttribute("error", errorMessage);
+				request.getRequestDispatcher("login.jsp").forward(request, response);
+
+			}
 		} else {
 			String errorMessage = "Invalid Credentials, please login again!";
 			request.setAttribute("error", errorMessage);

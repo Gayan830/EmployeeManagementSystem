@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Login</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -13,9 +13,7 @@
 	margin: 7% 35%;
 }
 
-.color-background {
-	background-color: #0091EA;
-}
+
 </style>
 </head>
 <body class="color-background">
@@ -46,21 +44,9 @@
 			</form>
 		</div>
 
-
 	</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
+	<jsp:include page="footer.jsp" />
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

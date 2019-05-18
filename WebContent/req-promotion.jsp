@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,11 +26,11 @@
 <title>Hello, world!</title>
 </head>
 <body class="color-background">
-	<jsp:include page="header-home.jsp" />
+	<jsp:include page="header-employee.jsp" />
 	<div class="center">
 		<div class="jumbotron">
 			<h2 class="display-8" align="center">Promotion Form</h2>
-			<form action="RegistrationServlet" method="post">
+			<form action="PromotionRequestServlet" method="post">
 				<div class="form-row">
 					<div class="col-md-12 mb-3">
 						<label for="validationDefault01">First name</label> <input
@@ -42,7 +43,7 @@
 							placeholder="Last name" name="lastName" required>
 					</div>
 					<div class="col-md-12 mb-3">
-						<label for="email">Years Worked</label> <select
+						<label for="yearsWorked">Years Worked</label> <select
 							class="form-control" id="exampleFormControlSelect1"
 							name="yearsWorked">
 							<option>1</option>
@@ -67,13 +68,23 @@
 					</div>
 
 					<div class="col-md-12 mb-3">
-						<label for="Role">Current Positon</label> <select
+						<label for="Role">Current Positon</label> 
+						<select
 							class="form-control" id="exampleFormControlSelect1"
 							name="position">
-							<option>Junior</option>
-							<option>Assistant</option>
-							<option>middle</option>
-							<option>senior</option>
+							<option>assistant software engineer</option>
+							<option>software engineer</option>
+							<option>senior software engineer</option>
+							<option>assistant accountant</option>
+							<option>accountant</option>
+							<option>senior accountant</option>
+							<option>elctronic engineer</option>
+							<option>assistant electronic engineer</option>
+							<option>senior electronic engineer</option>
+							<option>tech lead</option>
+							<option>project manager</option>
+							<option>network engineer</option>
+							<option>associate tech lead</option>
 						</select>
 					</div>
 
@@ -86,10 +97,7 @@
 
 
 	</div>
-
-
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<jsp:include page="footer.jsp" />
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>

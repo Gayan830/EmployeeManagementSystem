@@ -3,7 +3,7 @@ package com.empmanagement.entity;
 import java.util.UUID;
 
 public class User {
-	
+
 	private String employeeId;
 	private String firstName;
 	private String lastName;
@@ -15,6 +15,7 @@ public class User {
 	private String role;
 	private String position;
 	private String department;
+	private String registered;
 	
 	public User(String firstName, String lastName, String userName, String password, String email,
 			String telephone, String address, String role, String position, String department) {
@@ -38,9 +39,10 @@ public class User {
 	}
 	
 	public User(String employeeId, String firstName, String lastName, String userName, String password, String email,
-			String telephone, String address, String role, String position, String department) {
+			String telephone, String address, String role, String position, String department,String registered) {
 		this(firstName,lastName,userName,password,email,telephone,address,role,position,department);
 		this.employeeId = employeeId;
+		this.registered = registered;
 	}	
 	
 	public String getEmployeeId() {
@@ -129,5 +131,13 @@ public class User {
 	
 	public void setDepartment(String department) {
 		this.department = department;
+	}
+
+	public String getRegistered() {
+		return registered;
+	}
+
+	public void setRegistered(String registered) {
+		this.registered = registered;
 	}
 }

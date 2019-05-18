@@ -23,10 +23,15 @@ public class AuthenticationFilter implements Filter {
 	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2)
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest)arg0;
-		if(request.getRequestURI().startsWith("/Employee_Management_System/example")) {
+		if(request.getRequestURI().startsWith("/Employee_Management_System/example.jsp") ||
+				request.getRequestURI().startsWith("/Employee_Management_System/ListEmployees")||
+				request.getRequestURI().startsWith("/Employee_Management_System/profileServlet") ||
+				request.getRequestURI().startsWith("/Employee_Management_System/PromotionRequestServlet")||
+				request.getRequestURI().startsWith("/Employee_Management_System/NotificationServlet") ||
+				request.getRequestURI().startsWith("/Employee_Management_System/SalaryReportServlet")) {
 			HttpSession session = request.getSession();
 			if(session.getAttribute("user") == null) {
-				request.getRequestDispatcher("/html/login.jsp").forward(request, arg1);
+				request.getRequestDispatcher("/login.jsp").forward(request, arg1);
 			}
 		}
 			

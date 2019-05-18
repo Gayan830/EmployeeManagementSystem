@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.empmanagement.dao.ApplicationDao;
 import com.empmanagement.datacontroller.DataController;
+import com.empmanagement.entity.Loan;
 import com.empmanagement.entity.Promotion;
 import com.empmanagement.entity.SalaryPayment;
 import com.empmanagement.entity.User;
@@ -41,16 +42,37 @@ public class ListEmployees extends HttpServlet {
 		case "SEARCH":
 			searchRecords(request, response);
 			break;
+		case "APPROVE LOAN":
+			approveLoans(request, response);
+			break;
+		case "VIEW REPORT":
+			viewReport(request, response);
+			break;
 		}
 
 	}
 
+	//send the notifications to the requested employees when request approved by the manager.
+	private void approveLoans(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String id = request.getParameter("empId");
+		int index = Integer.parseInt(request.getParameter("index"));
+		List<Loan> loans = (List<Loan>) request.getSession().getAttribute("loans");
+		System.out.println(loans.get(index).getLoanAmount());
+		String specific = "Amount: " +loans.get(index).getLoanAmount() +
+						" Installment: " + loans.get(index).getInstallment() + 
+						" Re-payment years: " + loans.get(index).getRePaymentYears()+".";
+		ApplicationDao.getInstance().approveLoan(id);
+		ApplicationDao.getInstance().insertNotification(id, "yes", "loan", specific);
+		loadData(request,response);
+	}
+
+	
 	private void loadData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String[] months = new DateFormatSymbols().getMonths();
 		request.getSession().setAttribute("months", months);
 
-		int sYear = 2019;
+		int sYear = 1980;
 		int eYear = 2200;
 		List<Integer> yearList = new ArrayList<Integer>();
 		while (sYear <= eYear) {
@@ -58,24 +80,13 @@ public class ListEmployees extends HttpServlet {
 			sYear++;
 		}
 		List<Promotion> promotions = ApplicationDao.getInstance().getPromotionRequest();
-		System.out.println(promotions.get(0).getDepartment());
-
-		Collections.sort(promotions, new Comparator<Promotion>() {
-			public int compare(Promotion p1, Promotion p2) {
-				if (p1.getManagerApproval() == p2.getManagerApproval()) {
-					return 0;
-				} else if (p1.getManagerApproval()) {
-					return 1;
-				} else if (p2.getManagerApproval()) {
-					return 1;
-				} else {
-					return -1;
-				}
-			}
-		});
+		System.out.println(promotions.get(0).getFirstName());
+		List<Loan> loans = ApplicationDao.getInstance().getLoanRequests();
+				
 		request.getSession().setAttribute("promotions", promotions);
 		request.getSession().setAttribute("years", yearList);
-
+		request.getSession().setAttribute("loans",loans);
+		
 		List<User> userList = ApplicationDao.getInstance().getEmployeeList();
 		List<Work> worksList = ApplicationDao.getInstance().getAllWorkDetails();
 		List<String> positions = ApplicationDao.getInstance().getPositions();
@@ -91,34 +102,33 @@ public class ListEmployees extends HttpServlet {
 			throws ServletException, IOException {
 
 	}
-
+	
 	private void searchRecords(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String employeeId = request.getParameter("employee");
 		String month = request.getParameter("month");
 		String year = request.getParameter("year");
+		
 		List<Work> workList = ApplicationDao.getInstance().getWorkDetails(year, employeeId, month);
-		for (Work worker : workList) {
-			System.out.println(worker.getYear() + " " + worker.getMonth() + " " + worker.getType());
-		}
+		SalaryPayment salary = DataController.calculateSalary(year, employeeId, month);
+		
 		request.getSession().removeAttribute("works");
 		request.getSession().setAttribute("works", workList);
-		SalaryPayment salary = DataController.calculateSalary(year, employeeId, month);
-		if(ApplicationDao.getInstance().insertIntoPayments(salary)) {
-			System.out.println("Inserted Successfully to payment table.");
-		}
 		request.getSession().setAttribute("report", salary);
+		request.getSession().setAttribute("empId", employeeId);
 		request.getRequestDispatcher("/manager-dashboard.jsp").forward(request, response);
+	}
+	
+	private void viewReport(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/SalaryReport").forward(request,response);
 	}
 
 	private void approvePromotion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
 		String selectedPromotion = request.getParameter("pos");
 		ApplicationDao.getInstance().promote(id,selectedPromotion);
-		request.getSession().removeAttribute("command");
-		request.getRequestDispatcher("/manager-dashboard.jsp").forward(request, response);
-		
-		
+		ApplicationDao.getInstance().insertNotification(id,"yes","promotion",selectedPromotion);
+		loadData(request,response);
 	}
 
 }

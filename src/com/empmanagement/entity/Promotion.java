@@ -6,16 +6,16 @@ public class Promotion {
 	private String lastName;
 	private int yearsWorked;
 	private String currentPosition;
-	private boolean managerApproval;
+	private String managerApproval;
 	private String department;
 	private String employeeId;
 	
-	public Promotion(int yearsWorked, String currentPosition,boolean managerApproval) {
+	public Promotion(int yearsWorked, String currentPosition,String managerApproval) {
 		this.yearsWorked = yearsWorked;
 		this.currentPosition = currentPosition;
 		this.managerApproval = managerApproval;
 	}
-	public Promotion(int yearsWorked, String currentPosition,boolean managerApproval,
+	public Promotion(int yearsWorked, String currentPosition,String managerApproval,
 			String employeeId,String firstName,String lastName,String department) {
 		this(yearsWorked,currentPosition,managerApproval);
 		this.employeeId = employeeId;
@@ -54,10 +54,10 @@ public class Promotion {
 	public void setCurrentPosition(String currentPosition) {
 		this.currentPosition = currentPosition;
 	}
-	public boolean getManagerApproval() {
+	public String getManagerApproval() {
 		return managerApproval;
 	}
-	public void setManagerApproval(boolean managerApproval) {
+	public void setManagerApproval(String managerApproval) {
 		this.managerApproval = managerApproval;
 	}
 	

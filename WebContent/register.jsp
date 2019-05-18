@@ -28,74 +28,71 @@
 			<form action="RegistrationServlet" method="post">
 				<div class="form-row">
 					<div class="col-md-6 mb-3">
-						<label for="validationDefault01">First name</label>
-						 <input
+						<label for="validationDefault01">First name</label> <input
 							type="text" class="form-control" id="validationDefault01"
 							placeholder="First name" name="firstName" required>
 					</div>
 					<div class="col-md-6 mb-3">
-						<label for="validationDefault02">Last name</label> 
-						<input
+						<label for="validationDefault02">Last name</label> <input
 							type="text" class="form-control" id="validationDefault02"
 							placeholder="Last name" name="lastName" required>
 					</div>
 					<div class="col-md-6 mb-3">
-						<label for="validationDefaultUsername">Username</label> 
-						<input
+						<label for="validationDefaultUsername">Username</label> <input
 							type="text" class="form-control" id="validationDefaultUsername"
 							placeholder="Username" aria-describedby="inputGroupPrepend2"
 							required name="userName">
 					</div>
 					<div class="col-md-6 mb-3">
-						<label for="password">Password</label> 
-						<input
-							type="Password" class="form-control"
-							id="validationDefaultUsername" placeholder="Password"
-							aria-describedby="inputGroupPrepend2" name="password" required>
+						<label for="password">Password</label> <input type="Password"
+							class="form-control" id="validationDefaultUsername"
+							placeholder="Password" aria-describedby="inputGroupPrepend2"
+							name="password" required>
 					</div>
 					<div class="col-md-6 mb-3">
 						<label for="confirm password">Confirm Password</label> <input
 							type="Password" class="form-control"
 							id="validationDefaultUsername" placeholder="Confirm Password"
-							aria-describedby="inputGroupPrepend2" name="confirmPassword" required>
-					</div>
-					<div class="col-md-6 mb-3">
-						<label for="email">Email</label> 
-						<input
-							type="email" class="form-control" id="validationDefaultUsername"
-							placeholder="Email" aria-describedby="inputGroupPrepend2" name="email"
+							aria-describedby="inputGroupPrepend2" name="confirmPassword"
 							required>
 					</div>
 					<div class="col-md-6 mb-3">
-						<label for="telephone">Telephone</label> <input
-							type="text" class="form-control" id="validationDefaultUsername"
-							placeholder="Telephone" aria-describedby="inputGroupPrepend2" name="telephone"
-							required>
+						<label for="email">Email</label> <input type="email"
+							class="form-control" id="validationDefaultUsername"
+							placeholder="Email" aria-describedby="inputGroupPrepend2"
+							name="email" required>
 					</div>
 					<div class="col-md-6 mb-3">
-						<label for="address">Address</label>
-						<textarea class="form-control" aria-label="With textarea"
-							placeholder="Address" name="address"></textarea>
+						<label for="telephone">Telephone</label> <input type="text"
+							class="form-control" id="validationDefaultUsername"
+							placeholder="Telephone" aria-describedby="inputGroupPrepend2"
+							name="telephone" required>
 					</div>
+
 
 					<div class="col-md-6 mb-3">
 						<label for="Role">Role</label> <input type="text"
-							class="form-control" id="validationDefault03" placeholder="Role" name="role"
-							required>
+							class="form-control" id="validationDefault03" placeholder="Role"
+							name="role" required>
 					</div>
 
 					<div class="col-md-6 mb-3">
-						<label for="position">Position</label> 
-						<input
-							type="text" class="form-control" id="validationDefault03" name="position"
+						<label for="position">Position</label> <input type="text"
+							class="form-control" id="validationDefault03" name="position"
 							placeholder="Position" required>
 					</div>
 
 					<div class="col-md-6 mb-3">
-						<label for="department">Department</label> <input
-							type="text" class="form-control" id="validationDefault03" name="department"
+						<label for="department">Department</label> <input type="text"
+							class="form-control" id="validationDefault03" name="department"
 							placeholder="Department" required>
 					</div>
+				</div>
+
+				<div class="col-md-6 mb-3">
+					<label for="address">Address</label>
+					<textarea class="form-control" aria-label="With textarea"
+						placeholder="Address" name="address"></textarea>
 				</div>
 
 				<div align="center">
@@ -106,7 +103,7 @@
 
 
 	</div>
-	
-	
-	</body>
-	</html>
+
+	<jsp:include page="footer.jsp" />
+</body>
+</html>

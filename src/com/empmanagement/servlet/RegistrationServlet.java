@@ -26,10 +26,13 @@ public class RegistrationServlet extends HttpServlet {
 				request.getParameter("userName"), request.getParameter("password"), request.getParameter("email"),
 				request.getParameter("telephone"), request.getParameter("address"), request.getParameter("role"),
 				request.getParameter("position"), request.getParameter("department"));
+		
 		if (ApplicationDao.appDaoInstance.register(user)) {
 			System.out.println("employee Registered successfuly");
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
 		} else {
 			System.out.println("couldn't Register.");
+			request.getRequestDispatcher("/register.jsp").forward(request, response);
 		}
 	}
 
