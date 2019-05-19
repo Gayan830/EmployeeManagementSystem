@@ -17,14 +17,17 @@
 </style>
 </head>
 <body class="color-background">
-<c:choose >
-	<c:when test="${sessionScope.user.role == 'manager'}">
-		<jsp:include page="header-manager.jsp" />
-	</c:when>
-	<c:when test="${sessionScope.user.role == 'employee'}" >
-		<jsp:include page="header-employee.jsp" />
-	</c:when>
-</c:choose>
+	<c:choose>
+		<c:when test="${sessionScope.user.role == 'manager'}">
+			<jsp:include page="header-manager.jsp" />
+		</c:when>
+		<c:when test="${sessionScope.user.role == 'admin'}">
+			<jsp:include page="header-admin.jsp" />
+		</c:when>
+		<c:otherwise>
+			<jsp:include page="header-employee.jsp" />
+		</c:otherwise>
+	</c:choose>
 
 	<div class="center">
 		<div class="jumbotron">

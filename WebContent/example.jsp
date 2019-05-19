@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="css/style.css">
 <style type="text/css">
 	.center-content {
-	margin: 16% 20%;
+	margin: 13% 20%;
 	text-align:center;
 	}
 	.color-background {
@@ -27,6 +27,9 @@
 		<c:when test="${sessionScope.user.role == 'manager'}">
 			<jsp:include page="header-manager.jsp" />
 		</c:when>
+		<c:when test="${sessionScope.user.role == 'admin'}">
+			<jsp:include page="header-admin.jsp" />
+		</c:when>
 		<c:when test="${sessionScope.user.role == 'employee'}">
 			<jsp:include page="header-employee.jsp" />
 		</c:when>
@@ -34,19 +37,16 @@
 	<div class="site-wrapper-inner"></div>
 
 	<div class="inner cover center-content">
-		<h1 class="cover-heading text-white">Welcome Your Company</h1>
+		<div align="center">
+			<img style="width:100px;height:100px;" src="images/des-logo-icon.png"/>
+		</div>
+		<h1 class="cover-heading text-white">Welcome!</h1>
 		<p class="lead text-white">This is a Employee Management System
 			and It has various functionalities to manage employees and fulfill
 			the Company needs</p>
 	</div>
 
 
-
-
-	<%-- <%=session.getAttribute("user") %>
-	<% User user = (User) session.getAttribute("user"); %>
-	 <%=user.getEmployeeId() %>
-	 <%=user.getRole() %> --%>
 	<jsp:include page="footer.jsp" />
 </body>
 </html>

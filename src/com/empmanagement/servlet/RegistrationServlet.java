@@ -16,7 +16,7 @@ public class RegistrationServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		request.getRequestDispatcher("/register.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -29,9 +29,10 @@ public class RegistrationServlet extends HttpServlet {
 		
 		if (ApplicationDao.appDaoInstance.register(user)) {
 			System.out.println("employee Registered successfuly");
-			request.getRequestDispatcher("/login.jsp").forward(request, response);
+			request.setAttribute("message", "successfully Registered!");
+			request.getRequestDispatcher("/register.jsp").forward(request, response);
 		} else {
-			System.out.println("couldn't Register.");
+			request.setAttribute("message", "couldn't Register");
 			request.getRequestDispatcher("/register.jsp").forward(request, response);
 		}
 	}

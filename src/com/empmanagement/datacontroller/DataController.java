@@ -42,7 +42,6 @@ public class DataController {
 	public static List<Loan> calculateMaximumAllowableAmounts(String position) {
 		List<Loan> loanPreference = new ArrayList<Loan>();
 		double salary = ApplicationDao.getInstance().getSalary(position);
-		System.out.println(salary);
 		double amount = 0;
 
 		for (int i = 3; i <= 10; i++) {

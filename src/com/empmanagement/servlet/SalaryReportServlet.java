@@ -18,17 +18,22 @@ public class SalaryReportServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("This runs");
+		
+		SalaryPayment salary = (SalaryPayment) request.getSession().getAttribute("report");
+		String empId = (String) request.getSession().getAttribute("empId");
+		salary.setEmployeeId(empId);
+		if (ApplicationDao.getInstance().insertIntoPayments(salary, salary.getMonth(), salary.getYear())) {
+			System.out.println("Successful Inserted payment");
+
+		}
 		request.getRequestDispatcher("/view-salary-report.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		SalaryPayment salary = (SalaryPayment) request.getSession().getAttribute("report");
-		List<Work> works = (List<Work>) request.getSession().getAttribute("works");
-		if (ApplicationDao.getInstance().insertIntoPayments(salary, works.get(0).getMonth(), works.get(0).getYear())) {
-			System.out.println("Successful Inserted payment");
-
-		}
+		
+		
 		request.getRequestDispatcher("/view-salary-report.jsp").forward(request, response);
 	}
 

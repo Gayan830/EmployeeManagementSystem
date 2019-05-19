@@ -29,12 +29,14 @@
 			
 			<div class="form-row">
 				<div>
-					<c:forEach var="notification" items="${sessionScope.notifications}">
+					<c:forEach var="notification" items="${sessionScope.notifications}" varStatus="loop">
 						<c:if test="${notification.notificationApproval == 'yes'}">
 							<div class="alert alert-primary" role="alert">
 								<form action="NotificationServlet" method="post">
-									<label>${notification.message} </label> <input type="submit"
-										value="X" class="btn btn-primary">
+									<label>${notification.message} </label> 
+									<input type=hidden name="notificationId" value="${notification.notificationId}"/>
+									<input type="submit"
+										value="close" class="btn btn-primary">
 								</form>
 							</div>
 						</c:if>

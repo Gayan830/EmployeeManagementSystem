@@ -34,10 +34,7 @@
 							<td>Approved</td>
 						</c:when>
 						<c:otherwise>
-							<%-- <c:url var="templink" value="ListEmployees">
-								<c:param name="command" value="APPROVE" />
-								<c:param name="id" value="${promotion.employeeId}" />
-							</c:url> --%>
+							
 							<td align="center">
 								<form action="ListEmployees" method="get">
 									<select name="pos" class="custom-select">

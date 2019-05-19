@@ -25,6 +25,15 @@
 	<div class="center">
 		<div class="jumbotron">
 			<h2 class="display-8" align="center">Registration</h2>
+			<%
+				if (request.getAttribute("message") != null) {
+			%>
+			<div class="alert alert-danger" role="alert">
+				<%=request.getAttribute("message")%>
+			</div>
+			<%
+				}
+			%>
 			<form action="RegistrationServlet" method="post">
 				<div class="form-row">
 					<div class="col-md-6 mb-3">
@@ -71,15 +80,37 @@
 
 
 					<div class="col-md-6 mb-3">
-						<label for="Role">Role</label> <input type="text"
-							class="form-control" id="validationDefault03" placeholder="Role"
-							name="role" required>
+						<label for="Role">Role</label> <select name="role"
+							class="custom-select">
+							<option value="employee">Employee</option>
+							<option value="admin">Admin</option>
+							<option value="manager">Manager</option>
+						</select>
 					</div>
 
 					<div class="col-md-6 mb-3">
-						<label for="position">Position</label> <input type="text"
-							class="form-control" id="validationDefault03" name="position"
-							placeholder="Position" required>
+						<label for="position">Position</label> <select name="position"
+							class="custom-select">
+							<option value="assistant software engineer">assistant
+								software engineer</option>
+							<option value="software engineer">software engineer</option>
+							<option value="senior software engineer">senior software
+								engineer</option>
+							<option value="assistant accountant">assistant
+								accountant</option>
+							<option value="accountant">accountant</option>
+							<option value="senior accountant">senior accountant</option>
+							<option value="elctronic engineer">elctronic engineer</option>
+							<option value="assistant electronic engineer">assistant
+								electronic engineer</option>
+							<option value="senior electronic engineer">senior
+								electronic engineer</option>
+							<option value="tech lead">tech lead</option>
+							<option value="project manager">project manager</option>
+							<option value="network engineer">network engineer</option>
+							<option value="associate tech lead">associate tech lead</option>
+							<option value="manager">manager</option>
+						</select>
 					</div>
 
 					<div class="col-md-6 mb-3">

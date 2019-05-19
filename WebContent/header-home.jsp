@@ -14,11 +14,15 @@
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
 
-<title>Hello, world!</title>
+<title>HOME</title>
 
 <style type="text/css">
 .color-background {
 	background-color: #333333;;
+}
+img {
+	height:40px;
+	width:40px;
 }
 </style>
 </head>
@@ -26,7 +30,7 @@
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
 
-			<a class="navbar-brand" href="#">Logo</a>
+			<a class="navbar-brand" href="index.jsp"><img src="images/des-logo-icon.png" alt="logo"></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
 				aria-expanded="false" aria-label="Toggle navigation">

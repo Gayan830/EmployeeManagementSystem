@@ -4,25 +4,82 @@ import java.time.LocalDate;
 
 public class SalaryPayment {
 
+	public String getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(String employeeId) {
+		this.employeeId = employeeId;
+	}
+
+	private int id;
 	private int daysWorked;
 	private double compasanation;
 	private double deduction;
-	private LocalDate Date;
+	private LocalDate date;
 	private double salary;
 	private double payment;
+	private String month;
+	private String year;
+	private String employeeId;
 
 
 	public SalaryPayment(int daysWorked, double compasanation, double deduction, double salary, double payment) {
 		this.daysWorked = daysWorked;
 		this.compasanation = compasanation;
 		this.deduction = deduction;
-		this.Date = LocalDate.now();
+		this.date = LocalDate.now();
 		this.salary = salary;
 		this.payment = payment;
 	}
 
+	public SalaryPayment( double compasanation, double deduction,
+			double salary, double payment, String month, String year,
+			LocalDate date ,int id) {
+		this.compasanation = compasanation;
+		this.deduction = deduction;
+		this.salary = salary;
+		this.payment = payment;
+		this.date = date;
+		this.month = month;
+		this.year = year;
+		this.id = id;
+	}
+
+	
+
+	
 	public int getDaysWorked() {
 		return daysWorked;
+	}
+
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public void setPayment(double payment) {
+		this.payment = payment;
 	}
 
 	public double getPayment() {
@@ -34,11 +91,11 @@ public class SalaryPayment {
 	}
 
 	public LocalDate getDate() {
-		return Date;
+		return date;
 	}
 
 	public void setDate(LocalDate date) {
-		Date = date;
+		this.date = date;
 	}
 
 	public double getCompasanation() {

@@ -72,15 +72,14 @@ public class ListEmployees extends HttpServlet {
 		String[] months = new DateFormatSymbols().getMonths();
 		request.getSession().setAttribute("months", months);
 
-		int sYear = 1980;
-		int eYear = 2200;
+		int sYear = 2000;
+		int eYear = 2100;
 		List<Integer> yearList = new ArrayList<Integer>();
 		while (sYear <= eYear) {
 			yearList.add(sYear);
 			sYear++;
 		}
 		List<Promotion> promotions = ApplicationDao.getInstance().getPromotionRequest();
-		System.out.println(promotions.get(0).getFirstName());
 		List<Loan> loans = ApplicationDao.getInstance().getLoanRequests();
 				
 		request.getSession().setAttribute("promotions", promotions);
@@ -111,7 +110,7 @@ public class ListEmployees extends HttpServlet {
 		
 		List<Work> workList = ApplicationDao.getInstance().getWorkDetails(year, employeeId, month);
 		SalaryPayment salary = DataController.calculateSalary(year, employeeId, month);
-		
+		salary.setEmployeeId(employeeId);
 		request.getSession().removeAttribute("works");
 		request.getSession().setAttribute("works", workList);
 		request.getSession().setAttribute("report", salary);

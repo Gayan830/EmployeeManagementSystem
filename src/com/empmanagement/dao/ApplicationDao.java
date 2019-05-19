@@ -68,17 +68,15 @@ public class ApplicationDao {
 		try {
 			conn = DBConnection.getConnectionToDatabase();
 			String sql = "update user set firstName = ?, lastName = ?, userName = ?, email = ?,"
-					+ "telephone = ?, address =?, , department = ?, password = ?"
+					+ "telephone = ?, address =?,  department = ?, password = ?"
 					+ " where employeeId = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user.getFirstName());
 			pstmt.setString(2, user.getLastName());
 			pstmt.setString(3, user.getUserName());
 			pstmt.setString(4, user.getEmail());
-
 			pstmt.setString(5, user.getTelephone());
 			pstmt.setString(6, user.getAddress());
-			
 			pstmt.setString(7, user.getDepartment());
 			pstmt.setString(8, user.getPassword());
 			pstmt.setString(9, user.getEmployeeId());
@@ -86,7 +84,7 @@ public class ApplicationDao {
 			return true;
 		} catch (Exception e) {
 
-			System.out.println("Can't update...");
+			System.out.println(e.getMessage());
 			return false;
 		} finally {
 			close();
@@ -369,7 +367,6 @@ public class ApplicationDao {
 			st = conn.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
-				System.out.println("hello");
 				promotion.add(new Promotion(
 						rs.getInt("yearsWorked"),rs.getString("currentPostion"), rs.getString("managerApproval"),
 						rs.getString("employeeId"), rs.getString("firstName"), rs.getString("lastName"),
@@ -398,6 +395,7 @@ public class ApplicationDao {
 			pstmt.setString(7, promotion.getEmployeeId());
 
 			if (pstmt.executeUpdate() > -1) {
+				System.out.println("sucessfully Inserted promotion");
 				return true;
 			}
 			return false;
@@ -435,11 +433,12 @@ public class ApplicationDao {
 		}
 	}
 
+	
 	public boolean insertIntoPayments(SalaryPayment payment, String month, String year) {
 		try {
 			conn = DBConnection.getConnectionToDatabase();
 			pstmt = conn.prepareStatement(
-					"insert into payment(datePaid,month,year,salary,compesanation,deduction,payment,approval) values(?,?,?,?,?,?,?,?)");
+					"insert into payment(datePaid,month,year,salary,compesanation,deduction,payment,approval,employeeId) values(?,?,?,?,?,?,?,?,?)");
 			pstmt.setDate(1, Date.valueOf(payment.getDate()));
 			pstmt.setString(2, month);
 			pstmt.setInt(3, Integer.parseInt(year));
@@ -447,12 +446,14 @@ public class ApplicationDao {
 			pstmt.setDouble(5, payment.getCompasanation());
 			pstmt.setDouble(6, payment.getDeduction());
 			pstmt.setDouble(7, payment.getPayment());
-			pstmt.setString(8, "No");
+			pstmt.setString(8, "no");
+			pstmt.setString(9, payment.getEmployeeId());
 
 			if (pstmt.executeUpdate() > -1) {
 				System.out.println("Successfully Inserted.");
 				return true;
 			}
+			System.out.println("notInserted");
 			return false;
 
 		} catch (Exception e) {
@@ -495,7 +496,8 @@ public class ApplicationDao {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				notifications.add(new Notification(rs.getDate("date"),rs.getString("approval"),rs.getString("type"),rs.getString("specialMsg")));
+				notifications.add(new Notification(rs.getInt("id"),rs.getDate("date"),rs.getString("approval"),
+												rs.getString("type"),rs.getString("specialMsg")));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -547,7 +549,6 @@ public class ApplicationDao {
 			st = conn.createStatement();
 			rs = st.executeQuery("select * from loan");
 		    while(rs.next()) {
-		    	System.out.println("here comes");
 		    	double loanAmount = rs.getDouble("loanAmount");
 		    	int rePaymentYears = rs.getInt("rePaymentYears");
 		    	double installment = rs.getDouble("installment");
@@ -584,11 +585,12 @@ public class ApplicationDao {
 		
 	}
 
-	public boolean deleteNotification(String employeeId) {
+	public boolean deleteNotification(String employeeId, int id) {
 		try {
 			conn = DBConnection.getConnectionToDatabase();
-			pstmt = conn.prepareStatement("delete from notification where employeeId = ?");
+			pstmt = conn.prepareStatement("delete from notification where employeeId = ? and id = ?");
 			pstmt.setString(1, employeeId);
+			pstmt.setInt(2, id);
 			if(pstmt.executeUpdate()>-1) {
 				System.out.println("Deleted Successfully.");
 				return true;
@@ -633,11 +635,12 @@ public class ApplicationDao {
 	
 	public void approveRegistration(String id) {
 		try {
+			System.out.println("registering");
 			conn = DBConnection.getConnectionToDatabase();
 			pstmt = conn.prepareStatement("update user set registered = ? where employeeId = ? ");
 			pstmt.setString(1, "yes");
 			pstmt.setString(2, id);
-			if(pstmt.executeUpdate()>-1) {
+			if(pstmt.executeUpdate()>-1) { 
 				System.out.println("user registered successfully.");
 			}	
 		} catch (Exception e) {
@@ -660,7 +663,67 @@ public class ApplicationDao {
 			close();
 		}
 	}
-	
 
+	public List<SalaryPayment> getPaymentDetails() {
+		List<SalaryPayment> payment = new ArrayList<SalaryPayment>();
+		try {
+			conn = DBConnection.getConnectionToDatabase();
+			st = conn.createStatement();
+			String sql = "select * from payment";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				if(rs.getString("approval").equals("no")) {
+				payment.add(new SalaryPayment(
+						rs.getDouble("compesanation"),
+						rs.getDouble("deduction"),
+						rs.getDouble("salary"),
+						rs.getDouble("payment"),
+						rs.getString("month"),
+						rs.getString("year"),
+						rs.getDate("DatePaid").toLocalDate(),
+						rs.getInt("id")));
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			close();
+		}
+		return payment;
+	}
+	
+	public String getEmployeeIdFromPayment(int id) {
+		String empId = null;
+		try {
+			conn = DBConnection.getConnectionToDatabase();
+			pstmt = conn.prepareStatement("select * from payment where id = ? ");
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				empId = rs.getString("employeeId");
+			}
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		} finally {
+			close();
+		}
+		return empId;
+	}
+	
+	public void approvePaymentReport(int id) {
+		try {
+			conn = DBConnection.getConnectionToDatabase();
+			pstmt = conn.prepareStatement("update payment set approval = ? where id = ? ");
+			pstmt.setString(1, "yes");
+			pstmt.setInt(2, id);
+			if(pstmt.executeUpdate() > -1) {
+				System.out.println("Inserted Successfully");
+			}
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		} finally {
+			close();
+		}	
+	}
 	
 }

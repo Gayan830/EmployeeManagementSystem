@@ -43,6 +43,12 @@ public class User {
 		this(firstName,lastName,userName,password,email,telephone,address,role,position,department);
 		this.employeeId = employeeId;
 		this.registered = registered;
+	}
+	
+	public User(String employeeId, String firstName, String lastName, String userName, String password, String email,
+			String telephone, String address, String role, String position, String department) {
+		this(firstName,lastName,userName,password,email,telephone,address,role,position,department);
+		this.employeeId = employeeId;
 	}	
 	
 	public String getEmployeeId() {

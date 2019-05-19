@@ -20,7 +20,7 @@
 			<select name="employee" class="custom-select">
 				<c:forEach items="${userList}" var="user">
 					<option value="${user.employeeId}">${user.firstName}
-						${user.lastName}</option>
+					${user.lastName}</option>
 				</c:forEach>
 			</select>
 

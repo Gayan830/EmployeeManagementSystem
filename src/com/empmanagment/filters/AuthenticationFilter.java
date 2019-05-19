@@ -28,7 +28,14 @@ public class AuthenticationFilter implements Filter {
 				request.getRequestURI().startsWith("/Employee_Management_System/profileServlet") ||
 				request.getRequestURI().startsWith("/Employee_Management_System/PromotionRequestServlet")||
 				request.getRequestURI().startsWith("/Employee_Management_System/NotificationServlet") ||
-				request.getRequestURI().startsWith("/Employee_Management_System/SalaryReportServlet")) {
+				request.getRequestURI().startsWith("/Employee_Management_System/SalaryReportServlet")||
+				request.getRequestURI().startsWith("/Employee_Management_System/request-loan.jsp") ||
+				request.getRequestURI().startsWith("/Employee_Management_System/manage-profile.jsp")||
+				request.getRequestURI().startsWith("/Employee_Management_System/Notification.jsp") ||
+				request.getRequestURI().startsWith("/Employee_Management_System/RegistrationServlet")||
+				request.getRequestURI().startsWith("/Employee_Management_System/SalaryReportServlet")||
+				request.getRequestURI().startsWith("/Employee_Management_System/PromotionRequestServlet")||
+				request.getRequestURI().startsWith("/Employee_Management_System/LoanServlet")) {
 			HttpSession session = request.getSession();
 			if(session.getAttribute("user") == null) {
 				request.getRequestDispatcher("/login.jsp").forward(request, arg1);
